@@ -1,0 +1,89 @@
+﻿<Window x:Class="DemoProject.WPF.Views.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoProject.WPF.Views"
+        mc:Ignorable="d"
+        Title="Demo Project" Height="750" Width="900"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Border Background="#121212"
+            CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Button 
+                Content="&#xE106;" 
+                FontFamily="Segoe MDL2 Assets"
+                Grid.Column="1" 
+                HorizontalAlignment="Right"
+                Width="20"
+                Height="20"
+                Margin="5 0 5 0"
+                Click="exit"
+                />
+
+            <TextBlock 
+                Style="{StaticResource Regular}"
+                Grid.Row="1"
+                Text="Demo Project"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                />
+
+            <StackPanel
+                Grid.Column="0"
+                Grid.Row="2"
+                Orientation="Vertical">
+                <RadioButton
+                    Content="Home"
+                    Checked="BugsChecked"
+                    Style="{StaticResource DashboardItem}"/>
+
+                <RadioButton
+                    Content="Projects"
+                    Checked="BugsChecked"
+                    Style="{StaticResource DashboardItem}"/>
+
+                <RadioButton
+                    Content="Roadmap"
+                    Checked="BugsChecked"
+                    Style="{StaticResource DashboardItem}"/>
+                
+                <RadioButton
+                    Content="Tickets"
+                    Checked="TicketsChecked"
+                    Style="{StaticResource DashboardItem}"/>
+
+                <RadioButton
+                    Content="Bugs"
+                    Checked="BugsChecked"
+                    Style="{StaticResource DashboardItem}"/>
+
+                <RadioButton
+                    Content="Users"
+                    Checked="BugsChecked"
+                    Style="{StaticResource DashboardItem}"/>
+
+            </StackPanel>
+
+            <Frame
+                Grid.Row="2"
+                Grid.Column="1"
+                x:Name="page"
+                NavigationUIVisibility="Hidden"
+                />
+        </Grid>
+    </Border>
+</Window>
