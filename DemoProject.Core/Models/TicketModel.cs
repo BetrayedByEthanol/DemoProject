@@ -6,31 +6,23 @@ using System.Text;
 
 namespace DemoProject.Core.Models
 {
-    public record TicketModel
+    public record TicketModel 
     {
         [Key]
         public Guid id { get; init; }
-        
-        [Required,Range(3,32)]
+
+        [Required, MinLength(3), MaxLength(32)]
         public string name { get; init; }
 
-        [Required, Range(3, 256)]
+        [Required, MinLength(3), MaxLength(256)]
         public string description { get; init; }
-
-        [Required]
-        public ETicketState state { get; init; }
 
         [ForeignKey("id")]
         public UserModel user { get; init; }
 
         public TicketModel()
         {
-            name = "test";
-            description = "DO some stuff";
-            user = new UserModel()
-            {
-                username = "Clown"
-            };
+
         }
     }
 }

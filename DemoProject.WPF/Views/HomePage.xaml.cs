@@ -35,7 +35,7 @@ namespace DemoProject.WPF.Views
 
         private void OpenDialog(object sender, RoutedEventArgs e)
         {
-            var dialog = new InputDialog();
+            var dialog = new BugReportDialog();
             dialog.ShowDialog();
         }
     }

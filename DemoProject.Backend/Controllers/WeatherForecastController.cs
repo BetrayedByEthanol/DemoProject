@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoProject.Backend.ModelDTOs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DemoProject.Backend.Controllers
 {
@@ -16,10 +20,11 @@ namespace DemoProject.Backend.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly UserManager<UserIdentity> _usermanager;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, UserManager<UserIdentity> userManager)
         {
             _logger = logger;
+            _usermanager = userManager;
         }
 
         [HttpGet]
@@ -34,5 +39,14 @@ namespace DemoProject.Backend.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet,Route("/wet")]
+        public async Task<string> Wet()
+        {
+            var rng = new Random();
+            var res = await _usermanager.CreateAsync(new UserIdentity());
+            return res.Succeeded.ToString();
+        }
+
     }
 }

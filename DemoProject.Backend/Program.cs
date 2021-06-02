@@ -14,7 +14,16 @@ namespace DemoProject.Backend
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                    .UseStartup<Startup>()
+                    .UseKestrel(options =>
+                    {
+                        options.ListenAnyIP(80);
+                        options.ListenAnyIP(443, listenOptions =>
+                       {
+                           listenOptions.UseHttps("localhost.pfx", "443");
+                       });
+                    });
                 });
     }
 }

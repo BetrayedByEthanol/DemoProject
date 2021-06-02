@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,18 +7,18 @@ using System.Text;
 
 namespace DemoProject.Core.Models
 {
-    public record UserModel
+    public record UserModel 
     {
         [Key]
         public Guid id { get; init; }
         
-        [Required, Range(8,50)]
-        public MailAddress email { get; init; }
+        [Required, MinLength(8), MaxLength(50)]
+        public MailAddress Email { get; init; }
 
-        [Required, Range(3, 32)]
-        public string username { get; init; }
+        [Required, MinLength(3), MaxLength(32)]
+        public string UserName { get; init; }
 
         [Required]
-        public IdentityRole role { get; init; }
+        public IdentityRole Role { get; init; }
     }
 }

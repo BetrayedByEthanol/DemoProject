@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace DemoProject.Core.Models
 {
-    record StoryModel
+    public record StoryModel
     {
+        [Key]
+        public Guid id { get; init; }
     }
 }
