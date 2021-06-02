@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -42,7 +43,7 @@ namespace DemoProject.Backend.Controllers
             query.Add("state", state);
             _logger.LogInformation(UriHelper.GetEncodedPathAndQuery(Request));
 
-            return Content("<html> <form id=\"form\" action=\"/OAuth/Authorize" + query.ToString() +"\" method=\"POST\"> <input type=\"submit\" value=\"Submit\" /> <script> document.getElementById('form').submit() </script> </html>", "text/html");
+            return Content("<html> <form id=\"form\"  style=\"visibility: hidden; \" action=\"/OAuth/Authorize" + query.ToString() +"\" method=\"POST\"> <input type=\"submit\" value=\"Submit\" /> <script> document.getElementById('form').submit() </script> </html>", "text/html");
         }
 
         [HttpPost]
@@ -53,7 +54,7 @@ namespace DemoProject.Backend.Controllers
             string state)
         {
             const string code = "BABAABABABA";
-           
+            //state = refresh
             var query = new QueryBuilder();
             query.Add("code", code);
             query.Add("state", state);
@@ -73,7 +74,9 @@ namespace DemoProject.Backend.Controllers
             string code, // confirmation of the authentication process
             string redirect_uri,
             string client_id,
-            string refresh_token)
+            string refresh_token,
+            string username,
+            string password)
         {
             // some mechanism for validating the code
             redirect_uri = "/OAuth/Authorize";
@@ -113,10 +116,11 @@ namespace DemoProject.Backend.Controllers
 
             var responseJson = JsonConvert.SerializeObject(responseObject);
             var responseBytes = Encoding.UTF8.GetBytes(responseJson);
-            Response.StatusCode = 302;
-            var kv = new KeyValuePair<string, StringValues>("Location", new StringValues("/Weatherforecast"));
-            Response.Headers.Add(kv);
+            
+            Response.StatusCode = 200;
             await Response.Body.WriteAsync(responseBytes, 0, responseBytes.Length); //Should 
+
+            // Use Session
 
             //return Redirect("WeatherForecast");
         }
