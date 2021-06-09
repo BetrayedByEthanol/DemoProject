@@ -126,15 +126,15 @@ namespace DemoProject.Backend.Controllers
         {
             return Ok("CATCH ALL");
         }
-        [Authorize]
-        public IActionResult Validate()
+        
+        bool Validate(string accesToken)
         {
             if (HttpContext.Request.Query.TryGetValue("access_token", out var accessToken))
             {
 
-                return Ok();
+                return true;
             }
-            return BadRequest();
+            return false;
         }
     }
 }

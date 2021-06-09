@@ -40,7 +40,7 @@ namespace DemoProject.Backend.Controllers
             .ToArray();
         }
 
-        [HttpGet,Route("/wet")]
+        [HttpGet,Route("/wet"), Authorize]
         public async Task<string> Wet()
         {
             var rng = new Random();

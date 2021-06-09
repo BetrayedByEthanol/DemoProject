@@ -13,6 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 using DemoProject.Backend.ModelDTOs;
 using DemoProject.Backend.Security;
+using DemoProject.Backend.Middleware;
+using System.Security.Claims;
 
 namespace DemoProject.Backend
 {
@@ -67,12 +69,33 @@ namespace DemoProject.Backend
                 options.SlidingExpiration = true;
             });
 
-            services.AddTransient<IUserStore<UserIdentity>,ApplicationUserStore>();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true;
+                options.Cookie.HttpOnly = true;
+                options.IdleTimeout = new TimeSpan(0, 5, 0);
+
+            });
+
+            services.AddTransient<IUserStore<UserIdentity>, ApplicationUserStore>();
             services.AddTransient<IPasswordHasher<UserIdentity>, Sec>();
             services.AddTransient<ILookupNormalizer, LookUpNormalizer>();
             services.AddTransient<IdentityErrorDescriber>();
             services.AddTransient<UserManager<UserIdentity>>();
 
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
+            services.AddAuthentication(options =>
+            {
+                options.AddScheme<OAuthAccessTokenAuthenticationScheme>("OAuth", "OAuth");
+
+                options.DefaultAuthenticateScheme = "OAuth";
+                options.DefaultChallengeScheme = "OAuth";
+
+            });
+
+            services.AddAuthorization();
             
         }
 
@@ -88,10 +111,12 @@ namespace DemoProject.Backend
 
             //app.UseHttpsRedirection();
 
-            
+            app.UseDebugMiddleware();
 
             app.UseRouting();
-            
+
+            app.UseSession();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
