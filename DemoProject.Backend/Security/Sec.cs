@@ -13,12 +13,12 @@ namespace DemoProject.Backend.Security
 
         public string HashPassword(UserIdentity user, string password)
         {
-            return BCrypt.Net.BCrypt.HashPassword(password);
+            return BCrypt.Net.BCrypt.EnhancedHashPassword(password, 14, BCrypt.Net.HashType.SHA512);
         }
 
         public PasswordVerificationResult VerifyHashedPassword(UserIdentity user, string hashedPassword, string providedPassword)
         {
-            if (BCrypt.Net.BCrypt.Verify(providedPassword, hashedPassword)) return PasswordVerificationResult.Success;
+            if (BCrypt.Net.BCrypt.EnhancedVerify(providedPassword, hashedPassword, BCrypt.Net.HashType.SHA512)) return PasswordVerificationResult.Success;
             else return PasswordVerificationResult.Failed;
         }
     }

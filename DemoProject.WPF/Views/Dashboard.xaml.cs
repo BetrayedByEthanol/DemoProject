@@ -19,7 +19,7 @@ namespace DemoProject.WPF.Views
             mViewModel = new DashboardViewModel();
             this.DataContext = mViewModel;
             InitializeComponent();
-            page.Content = new HomePage();
+            page.Content = PageController.switchTo("Bugs");
             BaseControllerInitializer.configureController(this);
         }
 
@@ -30,7 +30,7 @@ namespace DemoProject.WPF.Views
 
         private void TicketsChecked(object sender, RoutedEventArgs e)
         {
-            page.Content = new TicketPage();
+            page.Content = PageController.switchTo(((RadioButton)sender).Content.ToString());
         }
         private void BugsChecked(object sender, RoutedEventArgs e)
         {

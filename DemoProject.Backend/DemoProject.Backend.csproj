@@ -8,25 +8,26 @@
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
     <PackageReference Include="EntityFramework.CodeFirstStoreFunctions" Version="1.2.0" />
     <PackageReference Include="Mapster" Version="7.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.Json" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.6" />
-    <PackageReference Include="Microsoft.Owin.Security.OpenIdConnect" Version="4.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 

@@ -43,6 +43,7 @@ namespace DemoProject.Backend.Controllers
         [HttpGet,Route("/wet"), Authorize]
         public async Task<string> Wet()
         {
+            var username = User.Identity.Name;
             var rng = new Random();
             var res = await _usermanager.CreateAsync(new UserIdentity());
             return res.Succeeded.ToString();

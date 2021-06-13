@@ -19,6 +19,5 @@ namespace DemoProject.Core.ViewModels
         public HomePageViewModel()
         {
         }
-
     }
 }

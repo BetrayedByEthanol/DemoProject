@@ -22,7 +22,7 @@
             <Button Grid.Row="0" Name="addButton" Content=" Add " Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
         </Grid>
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding Path=test, Mode=TwoWay}">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Path=bugs, Mode=TwoWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border 

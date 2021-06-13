@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UserSecretsId>406b4f2e-32aa-474e-aedd-5a943444e098</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +26,11 @@
     <Content Include="Resources\images\password.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Meziantou.Framework.Win32.CredentialManager" Version="1.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

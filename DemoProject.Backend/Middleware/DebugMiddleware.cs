@@ -19,7 +19,7 @@ namespace DemoProject.Backend.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            Debug.WriteLine("Print Values here");
+            Debug.WriteLine(context.Request.Path.Value);
             await _next(context);
         }
     }

@@ -15,6 +15,7 @@ using DemoProject.Backend.ModelDTOs;
 using DemoProject.Backend.Security;
 using DemoProject.Backend.Middleware;
 using System.Security.Claims;
+using DemoProject.Backend.Hubs;
 
 namespace DemoProject.Backend
 {
@@ -32,7 +33,8 @@ namespace DemoProject.Backend
         {
 
             services.AddControllers();
-
+            services.AddSignalR();
+            Mapping.cofigureMappingTable();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
@@ -88,7 +90,7 @@ namespace DemoProject.Backend
             services.ConfigureApplicationCookie(options => options.LoginPath = "/login");
             services.AddAuthentication(options =>
             {
-                options.AddScheme<OAuthAccessTokenAuthenticationScheme>("OAuth", "OAuth");
+                options.AddScheme<OAuthAuthenticationScheme>("OAuth", "OAuth");
 
                 options.DefaultAuthenticateScheme = "OAuth";
                 options.DefaultChallengeScheme = "OAuth";
@@ -120,8 +122,11 @@ namespace DemoProject.Backend
             app.UseAuthentication();
             app.UseAuthorization();
 
+
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<BugHub>("/BugHub");
                 endpoints.MapControllers();
             });
         }

@@ -1,5 +1,6 @@
 ﻿using DemoProject.Core.Models;
 using DemoProject.Core.ViewModels;
+using DemoProject.WPF.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,21 +23,22 @@ namespace DemoProject.WPF.Views
     /// </summary>
     public partial class HomePage : Page
     {
-        public HomePageViewModel mViewModel { get; set; }
+        public BugReportViewModel mViewModel { get; set; }
         public HomePage()
         {
-            mViewModel = new HomePageViewModel();
+            mViewModel = PageController.getViewModel("Bugs") as BugReportViewModel;
             this.DataContext = mViewModel;
             InitializeComponent();
-            mViewModel.test.Add(new TicketModel());
-            Debug.WriteLine(mViewModel.test.Count);
             addButton.Click += OpenDialog;
         }
 
         private void OpenDialog(object sender, RoutedEventArgs e)
         {
             var dialog = new BugReportDialog();
+            dialog.Closed += submitBug;
             dialog.ShowDialog();
         }
+
+        private async void submitBug(object sender, EventArgs e) => await mViewModel.submitBug(((BugReportDialog)sender).bug);
     }
 }

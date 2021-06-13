@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,30 +54,80 @@ namespace DemoProject.Backend.Controllers
             string state)
         {
             const string code = "BABAABABABA";
-           
+            if((state is null) || (redirectUri is null))
+            {
+                state = "";
+                redirectUri = "/login";
+            }
+
+            //Refresh Check
+
             var query = new QueryBuilder();
             query.Add("code", code);
             query.Add("state", state);
-            Response.StatusCode = 302;
+            query.Add("redirect_uri", redirectUri);
+            Response.StatusCode = 307;
+            Response.ContentType = "application/json";
             var kv = new KeyValuePair<string, StringValues>("Location", new StringValues("/OAuth/Token" + query.ToString()));
             Response.Headers.Add(kv);
 
             await Response.CompleteAsync();
 
-            //return Redirect($"{redirectUri}{query.ToString()}");
+            //return Redirect($"/OAuth/Token{query.ToString()}");
         }
 
         [HttpPost]
         [Route("/OAuth/Token")] //Redirect to OG page
         public async Task Token(
-            string grant_type, // flow of access_token request
             string code, // confirmation of the authentication process
             string redirect_uri,
             string client_id,
             string refresh_token)
         {
             // some mechanism for validating the code
-            redirect_uri = "/OAuth/Authorize";
+            var qstring = Request.Query.ToString();
+            var access_token = generateToken();
+            var responseObject = new
+            {
+                access_token,
+                token_type = "Bearer",
+                raw_claim = "oauthTutorial",
+                refresh_token = "RefreshTokenSampleValueSomething77",
+                redirect_uri = redirect_uri
+                
+            };
+
+           
+
+            var responseJson = JsonConvert.SerializeObject(responseObject);
+            var responseBytes = Encoding.UTF8.GetBytes(responseJson);
+            HttpContext.Session.Set("accessToken", Encoding.UTF8.GetBytes(access_token));
+
+            await Response.Body.WriteAsync(responseBytes, 0, responseBytes.Length); //Should 
+        }
+
+        public static bool Validate(string accesToken, out ClaimsPrincipal claims)
+        {
+            claims = null;
+            if (!String.IsNullOrEmpty(accesToken))
+            {
+                JwtSecurityTokenHandler tokenHandler = new();
+                try
+                {
+                    TokenValidationParameters parameters = new();
+                    claims = tokenHandler.ValidateToken(accesToken, parameters, out SecurityToken securityToken);
+                    return true;
+                } catch(SecurityTokenException ex)
+                {
+                    return false;
+                }
+                
+            }
+            return false;
+        }
+
+        public static string generateToken()
+        {
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, "some_id"),
@@ -87,6 +138,7 @@ namespace DemoProject.Backend.Controllers
             var key = new SymmetricSecurityKey(secretBytes);
             var algorithm = SecurityAlgorithms.HmacSha256;
 
+
             var signingCredentials = new SigningCredentials(key, algorithm);
 
             var token = new JwtSecurityToken(
@@ -94,47 +146,10 @@ namespace DemoProject.Backend.Controllers
                 "Audience",
                 claims,
                 notBefore: DateTime.Now,
-                expires: grant_type == "refresh_token"
-                    ? DateTime.Now.AddMinutes(5)
-                    : DateTime.Now.AddMilliseconds(1),
+                expires: DateTime.Now.AddMinutes(5),
                 signingCredentials);
 
-            var access_token = new JwtSecurityTokenHandler().WriteToken(token);
-
-            var responseObject = new
-            {
-                access_token,
-                token_type = "Bearer",
-                raw_claim = "oauthTutorial",
-                refresh_token = "RefreshTokenSampleValueSomething77"
-            };
-
-           
-
-            var responseJson = JsonConvert.SerializeObject(responseObject);
-            var responseBytes = Encoding.UTF8.GetBytes(responseJson);
-            Response.StatusCode = 302;
-            var kv = new KeyValuePair<string, StringValues>("Location", new StringValues("/Weatherforecast"));
-            Response.Headers.Add(kv);
-            await Response.Body.WriteAsync(responseBytes, 0, responseBytes.Length); //Should 
-
-            //return Redirect("WeatherForecast");
-        }
-
-        [HttpGet, Route("OAuth/{**catchAll}")]
-        public IActionResult Get()
-        {
-            return Ok("CATCH ALL");
-        }
-        
-        bool Validate(string accesToken)
-        {
-            if (HttpContext.Request.Query.TryGetValue("access_token", out var accessToken))
-            {
-
-                return true;
-            }
-            return false;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

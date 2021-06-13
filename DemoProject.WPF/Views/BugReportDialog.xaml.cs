@@ -1,4 +1,5 @@
-﻿using DemoProject.Core.ViewModels;
+﻿using DemoProject.Core.Models;
+using DemoProject.Core.ViewModels;
 using DemoProject.WPF.Controllers;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,8 @@ namespace DemoProject.WPF.Views
     /// </summary>
     public partial class BugReportDialog : Window
     {
-        BugReportViewModel mViewModel { get; set; }
+        BugReportDialogViewModel mViewModel { get; set; }
+        public BugModel bug;
         public BugReportDialog()
         {
             mViewModel = new ();
@@ -33,6 +35,13 @@ namespace DemoProject.WPF.Views
 
         private void closeInput(object sender, RoutedEventArgs e)
         {
+            bug = new()
+            {
+                id = Guid.NewGuid(),
+                name = "name",
+                state = 0,
+                description = "desc",
+             };
             this.Close();
         }
     }
