@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace DemoProject.Core.ViewModels
 {
@@ -14,7 +9,7 @@ namespace DemoProject.Core.ViewModels
         public ObservableCollection<string> rating
         {
             get { return _rating; }
-            set { _rating= value; }
+            set { _rating = value; }
         }
 
         private string _name;

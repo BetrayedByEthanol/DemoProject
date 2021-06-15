@@ -1,9 +1,7 @@
 ﻿using DemoProject.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DemoProject.Backend.Hubs
@@ -16,6 +14,7 @@ namespace DemoProject.Backend.Hubs
             return Clients.All.SendAsync("Method", data);
         }
 
+        [Authorize]
         public async Task create(BugModel model)
         {
             //Store in db

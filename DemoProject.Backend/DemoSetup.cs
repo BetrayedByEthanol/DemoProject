@@ -1,16 +1,10 @@
 ﻿using DemoProject.Backend.Data;
 using DemoProject.Backend.ModelDTOs;
-using DemoProject.Core;
 using DemoProject.Core.Models;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 
 namespace DemoProject.Backend
 {

@@ -1,10 +1,5 @@
-﻿using DemoProject.Backend.Data;
-using DemoProject.Backend.ModelDTOs;
+﻿using DemoProject.Backend.ModelDTOs;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DemoProject.Backend.Security
 {

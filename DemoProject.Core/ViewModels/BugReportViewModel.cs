@@ -1,18 +1,15 @@
 ﻿using DemoProject.Core.Models;
 using Microsoft.AspNetCore.SignalR.Client;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DemoProject.Core.ViewModels
 {
     public class BugReportViewModel : BidirectionalViewModel
     {
-        
+
         private ObservableCollection<BugModel> _bugs;
         public ObservableCollection<BugModel> bugs
         {

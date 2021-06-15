@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +24,7 @@ namespace DemoProject.Backend.Controllers
             _logger = logger;
         }
 
-        [HttpGet] //This should have refresh Token and GET Code 
+        [HttpGet]
         [Route("/OAuth/Authorize")]
         public async Task<IActionResult> Authorize(
             string response_type, // authorization flow type 
@@ -35,26 +33,26 @@ namespace DemoProject.Backend.Controllers
             string scope, // what info I want = email,grandma,tel
             string state) // random string generated to confirm that we are going to back to the same client
         {
-            state = "Random Auth Code ??";
-            redirect_uri = "not null";
+            state = RandomString(69);
+            redirect_uri ??= "not null";
             // ?a=foo&b=bar
             var query = new QueryBuilder();
             query.Add("redirectUri", redirect_uri);
             query.Add("state", state);
             _logger.LogInformation(UriHelper.GetEncodedPathAndQuery(Request));
 
-            return Content("<html> <form id=\"form\" action=\"/OAuth/Authorize" + query.ToString() +"\" method=\"POST\"> <input type=\"submit\" value=\"Submit\" /> <script> document.getElementById('form').submit() </script> </html>", "text/html");
+            return Content("<html> <form id=\"form\" action=\"/OAuth/Authorize" + query.ToString() + "\" method=\"POST\"> <input type=\"submit\" value=\"Submit\" /> <script> document.getElementById('form').submit() </script> </html>", "text/html");
         }
 
-        [HttpPost]
+        [HttpPost]//This should have refresh Token
         [Route("/OAuth/Authorize")]
         public async Task Authorize(
             string username,
             string redirectUri,
             string state)
         {
-            const string code = "BABAABABABA";
-            if((state is null) || (redirectUri is null))
+            string code = RandomString(69);
+            if ((state is null) || (redirectUri is null))
             {
                 state = "";
                 redirectUri = "/login";
@@ -72,10 +70,10 @@ namespace DemoProject.Backend.Controllers
             Response.Headers.Add(kv);
 
             await Response.CompleteAsync();
-
-            //return Redirect($"/OAuth/Token{query.ToString()}");
         }
 
+
+        //Spit Token part and code verifing part
         [HttpPost]
         [Route("/OAuth/Token")] //Redirect to OG page
         public async Task Token(
@@ -94,10 +92,10 @@ namespace DemoProject.Backend.Controllers
                 raw_claim = "oauthTutorial",
                 refresh_token = "RefreshTokenSampleValueSomething77",
                 redirect_uri = redirect_uri
-                
+
             };
 
-           
+
 
             var responseJson = JsonConvert.SerializeObject(responseObject);
             var responseBytes = Encoding.UTF8.GetBytes(responseJson);
@@ -117,11 +115,12 @@ namespace DemoProject.Backend.Controllers
                     TokenValidationParameters parameters = new();
                     claims = tokenHandler.ValidateToken(accesToken, parameters, out SecurityToken securityToken);
                     return true;
-                } catch(SecurityTokenException ex)
+                }
+                catch (SecurityTokenException ex)
                 {
                     return false;
                 }
-                
+
             }
             return false;
         }
@@ -131,7 +130,8 @@ namespace DemoProject.Backend.Controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, "some_id"),
-                new Claim("granny", "cookie")
+                new Claim("granny", "cookie"),
+                new ClaimsIdentity
             };
 
             var secretBytes = Encoding.UTF8.GetBytes("Secret Needs to be at least 16 chars");
@@ -151,5 +151,34 @@ namespace DemoProject.Backend.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+        [HttpPost]
+        [Route("/OAuth/Register")]
+        public async Task registerAccount()
+        {
+
+        }
+
+        [HttpPost]
+        [Route("/OAuth/verify")]
+        public async Task verifyAccount()
+        {
+
+        }
+
+        [HttpPost]
+        [Route("/OAuth/login")]
+        public async Task login()
+        {
+
+        }
+
+        public static string RandomString(int length)
+        {
+            var rng = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length).Select(s => s[rng.Next(s.Length)]).ToArray());
+        }
+
     }
 }

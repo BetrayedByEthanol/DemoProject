@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DemoProject.Core.Models
+﻿namespace DemoProject.Core.Models
 {
     public enum ETicketState
     {

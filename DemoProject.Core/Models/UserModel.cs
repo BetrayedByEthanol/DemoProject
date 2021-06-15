@@ -1,17 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
-using System.Text;
 
 namespace DemoProject.Core.Models
 {
-    public record UserModel 
+    public record UserModel
     {
         [Key]
         public Guid id { get; init; }
-        
+
         [Required, MinLength(8), MaxLength(50)]
         public MailAddress Email { get; init; }
 

@@ -21,7 +21,7 @@ namespace DemoProject.Backend
                         options.ListenAnyIP(80);
                         options.ListenAnyIP(443, listenOptions =>
                        {
-                           listenOptions.UseHttps("localhost.pfx", "443");
+                           //listenOptions.UseHttps("localhost.pfx", "443");
                        });
                     });
                 });

@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DemoProject.Core.ViewModels
@@ -21,7 +18,7 @@ namespace DemoProject.Core.ViewModels
 
             configureConnectionChannels();
             connection.Closed += disconnected;
-            try {  await connection.StartAsync(); }
+            try { await connection.StartAsync(); }
             catch (Exception ex) { Debug.WriteLine(ex.Message); }
         }
 

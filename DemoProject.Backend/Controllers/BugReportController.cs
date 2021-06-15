@@ -1,15 +1,10 @@
 ﻿using DemoProject.Backend.Data;
 using DemoProject.Backend.ModelDTOs;
-using DemoProject.Core.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace DemoProject.Backend.Controllers
 {

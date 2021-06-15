@@ -3,12 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.Caching;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DemoProject.WPF.HTTP
 {
@@ -59,7 +56,7 @@ namespace DemoProject.WPF.HTTP
                     Name = "access_token"
                 };
 
-                client.DefaultRequestHeaders.Add("Cookie",cookie.ToString() );
+                client.DefaultRequestHeaders.Add("Cookie", cookie.ToString());
 
                 response = client.GetAsync(path).GetAwaiter().GetResult();
                 content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();

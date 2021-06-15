@@ -40,7 +40,7 @@ namespace DemoProject.Backend.Controllers
             .ToArray();
         }
 
-        [HttpGet,Route("/wet"), Authorize]
+        [HttpGet, Route("/wet"), Authorize]
         public async Task<string> Wet()
         {
             var username = User.Identity.Name;

@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
 
 namespace DemoProject.Core.ViewModels
 {
@@ -19,7 +14,7 @@ namespace DemoProject.Core.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-       
-        
+
+
     }
 }

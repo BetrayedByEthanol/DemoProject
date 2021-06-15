@@ -2,18 +2,7 @@
 using DemoProject.Core.ViewModels;
 using DemoProject.WPF.Controllers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DemoProject.WPF.Views
 {
@@ -26,7 +15,7 @@ namespace DemoProject.WPF.Views
         public BugModel bug;
         public BugReportDialog()
         {
-            mViewModel = new ();
+            mViewModel = new();
             this.DataContext = mViewModel;
             InitializeComponent();
             closeButton.Click += closeInput;
@@ -41,7 +30,7 @@ namespace DemoProject.WPF.Views
                 name = "name",
                 state = 0,
                 description = "desc",
-             };
+            };
             this.Close();
         }
     }
